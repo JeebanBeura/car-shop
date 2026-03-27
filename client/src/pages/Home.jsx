@@ -21,11 +21,11 @@ const Home = () => {
           carService.getAll(),
           blogService.getAll()
         ]);
-        
+
         // Use API data if available, else fallback to static
         const apiCars = carsRes.data.length > 0 ? carsRes.data : [...staticCars, ...staticUsedCars];
         const apiBlogs = blogsRes.data.length > 0 ? blogsRes.data : staticBlogs;
-        
+
         setCars(apiCars);
         setBlogs(apiBlogs);
       } catch (err) {
@@ -46,20 +46,11 @@ const Home = () => {
     <div className="bg-white">
       <Hero />
       <div id="cars">
-        <CarList 
-          title="Featured New Arrivals" 
-          subtitle="Explore the latest" 
-          cars={newCars.length > 0 ? newCars : staticCars} 
+        <CarList
+          title="Featured New Arrivals"
+          subtitle="Explore the latest"
+          cars={newCars.length > 0 ? newCars : staticCars}
           id="new-cars-list"
-        />
-      </div>
-      <div id="used-cars">
-        <CarList 
-          title="Quality Certified Pre-Owned" 
-          subtitle="Used Cars" 
-          cars={usedCars.length > 0 ? usedCars : staticUsedCars} 
-          id="used-cars-list"
-          variant="light"
         />
       </div>
       <Newsletter />

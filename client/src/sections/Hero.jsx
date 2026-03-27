@@ -27,73 +27,59 @@ const Hero = () => {
 
   return (
     <section className="relative h-[calc(100vh-80px)] overflow-hidden bg-dark">
-      <div className="flex flex-col md:flex-row h-full">
-        {/* Left Side - Text */}
-        <div className="flex-1 flex items-center justify-center px-6 md:px-12 lg:px-24 z-10 py-12 md:py-0">
-          <div className="max-w-2xl text-white">
-            <h4 className="text-primary font-bold tracking-widest uppercase mb-4 animate-in slide-in-from-left duration-700">Premium Experience</h4>
-            <h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight animate-in slide-in-from-left duration-1000 delay-100">
-              Find Your <span className="text-primary italic">Dream Car</span> Today
-            </h1>
-            <p className="text-lg text-gray-400 mb-10 leading-relaxed animate-in slide-in-from-left duration-1000 delay-200">
-              Discover the finest collection of luxury and performance vehicles.
-              From the latest models to certified pre-owned classics, we bring you excellence on four wheels.
-            </p>
-            <div className="flex flex-wrap gap-4 animate-in slide-in-from-left duration-1000 delay-300">
-              <button className="bg-primary hover:bg-blue-600 text-white px-10 py-4 rounded-full font-bold text-lg shadow-xl shadow-blue-500/20 active:scale-95 transition-all">
-                Explore Cars
-              </button>
-              <button className="bg-white/10 hover:bg-white/20 text-white backdrop-blur-sm border border-white/20 px-10 py-4 rounded-full font-bold text-lg active:scale-95 transition-all">
-                Sell Car
-              </button>
-            </div>
+      {/* Background Image Slider */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden">
+        {images.map((img, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 transition-all duration-1000 ease-in-out transform ${index === currentIndex ? 'opacity-100 scale-100' : 'opacity-0 scale-110'
+              }`}
+          >
+            <img
+              src={img}
+              alt={`Car ${index + 1}`}
+              className="w-full h-full object-cover"
+            />
+            {/* Dark Overlay for better visibility of controls */}
+            <div className="absolute inset-0 bg-black/40"></div>
           </div>
-        </div>
+        ))}
+      </div>
 
-        {/* Right Side - Image Slider */}
-        <div className="flex-1 relative h-64 md:h-full overflow-hidden">
-          {images.map((img, index) => (
-            <div
-              key={index}
-              className={`absolute inset-0 transition-all duration-1000 ease-in-out transform ${index === currentIndex ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-full scale-110'
-                }`}
-            >
-              <img
-                src={img}
-                alt={`Car ${index + 1}`}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-dark to-transparent md:bg-gradient-to-l opacity-60"></div>
-            </div>
-          ))}
+      {/* Hero Content Overlay (Optional, but currently empty as requested) */}
+      <div className="relative h-full flex items-center justify-center px-6 z-10">
+        {/* Placeholder for any centered text if needed in the future */}
+      </div>
 
-          {/* Controls */}
-          <div className="absolute bottom-8 right-8 flex gap-3 z-20">
-            <button
-              onClick={prevSlide}
-              className="p-3 bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-full backdrop-blur-md transition-all active:scale-90"
-            >
-              <ChevronLeft size={24} />
-            </button>
-            <button
-              onClick={nextSlide}
-              className="p-3 bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-full backdrop-blur-md transition-all active:scale-90"
-            >
-              <ChevronRight size={24} />
-            </button>
-          </div>
+      {/* Controls */}
+      <div className="absolute bottom-8 right-8 flex gap-4 z-20">
+        <button
+          onClick={prevSlide}
+          className="p-4 bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-full backdrop-blur-md transition-all active:scale-95 group"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft size={28} className="group-hover:-translate-x-1 transition-transform" />
+        </button>
+        <button
+          onClick={nextSlide}
+          className="p-4 bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-full backdrop-blur-md transition-all active:scale-95 group"
+          aria-label="Next slide"
+        >
+          <ChevronRight size={28} className="group-hover:translate-x-1 transition-transform" />
+        </button>
+      </div>
 
-          {/* Dots */}
-          <div className="absolute bottom-8 left-1/2 md:left-auto md:right-32 flex gap-2 z-20 -translate-x-1/2 md:translate-x-0">
-            {images.map((_, index) => (
-              <div
-                key={index}
-                className={`h-1.5 rounded-full transition-all duration-300 ${index === currentIndex ? 'w-8 bg-primary' : 'w-2 bg-white/30'
-                  }`}
-              />
-            ))}
-          </div>
-        </div>
+      {/* Dots */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-3 z-20">
+        {images.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentIndex(index)}
+            className={`h-2 rounded-full transition-all duration-300 ${index === currentIndex ? 'w-10 bg-primary' : 'w-2 bg-white/40 hover:bg-white/60'
+              }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
       </div>
     </section>
   );

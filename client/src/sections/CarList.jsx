@@ -6,7 +6,7 @@ const CarList = ({ title, subtitle, cars, id, variant }) => {
   const [startIndex, setStartIndex] = useState(0);
 
   const getStep = () => {
-    if (window.innerWidth >= 1024) return 4;
+    if (window.innerWidth >= 1024) return 3;
     if (window.innerWidth >= 768) return 2;
     return 1;
   };
@@ -34,48 +34,43 @@ const CarList = ({ title, subtitle, cars, id, variant }) => {
             <h4 className="text-primary font-bold tracking-widest uppercase mb-3">{subtitle}</h4>
             <h2 className="text-4xl md:text-5xl font-black text-dark leading-tight">{title}</h2>
           </div>
-          
+
           <div className="flex gap-4">
             <button
               onClick={prevSlide}
               disabled={startIndex === 0}
-              className={`p-4 rounded-2xl border transition-all ${
-                startIndex === 0 
-                ? 'border-gray-200 text-gray-300 cursor-not-allowed' 
+              className={`p-4 rounded-2xl border transition-all ${startIndex === 0
+                ? 'border-gray-200 text-gray-300 cursor-not-allowed'
                 : 'border-dark text-dark hover:bg-dark hover:text-white active:scale-90 shadow-lg'
-              }`}
+                }`}
             >
               <ChevronLeft size={24} />
             </button>
             <button
               onClick={nextSlide}
               disabled={startIndex + getStep() >= cars.length}
-              className={`p-4 rounded-2xl border transition-all ${
-                startIndex + getStep() >= cars.length 
-                ? 'border-gray-200 text-gray-300 cursor-not-allowed' 
+              className={`p-4 rounded-2xl border transition-all ${startIndex + getStep() >= cars.length
+                ? 'border-gray-200 text-gray-300 cursor-not-allowed'
                 : 'border-dark text-dark hover:bg-dark hover:text-white active:scale-90 shadow-lg'
-              }`}
+                }`}
             >
               <ChevronRight size={24} />
-            </button>
-            <button className="hidden md:flex items-center gap-2 text-dark font-bold hover:text-primary transition-colors ml-4 px-2">
-              View All <ArrowRight size={20} />
             </button>
           </div>
         </div>
 
         {/* Carousel Container */}
         <div className="relative">
-          <div 
+          <div
             className="flex transition-transform duration-700 ease-in-out gap-6"
-            style={{ 
+            style={{
               transform: `translateX(-${startIndex * (100 / getStep())}%)`,
             }}
           >
             {cars.map((car) => (
-              <div 
-                key={car._id || car.id} 
-                className="w-full md:w-[calc(50%-12px)] lg:w-[calc(25%-18px)] flex-shrink-0"
+              <div
+                key={car._id || car.id}
+                className="w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] flex-shrink-0"
               >
                 <CarCard car={car} />
               </div>
